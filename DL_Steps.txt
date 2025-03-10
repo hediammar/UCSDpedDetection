@@ -1,0 +1,47 @@
+Here’s a breakdown of how to approach this anomaly detection project in pedestrian walkways, with suggested steps for each task. This plan will help you organize group work and address all project requirements effectively.
+
+Project Breakdown and Suggested Steps
+1. Data Preprocessing
+Loading Data: Download the UCSD Anomaly Detection Dataset and use libraries like OpenCV or imageio to load video frames.
+Frame Extraction: Convert video clips into frames (about 200 frames per clip). Each frame can be saved as an individual image or processed in memory, depending on the model and memory limitations.
+Normalization: Standardize frames by resizing and normalizing pixel values, typically between [0,1] or [-1,1] (depending on model requirements).
+Train/Test Split: Use the predefined train-test split in the dataset. This step may not require further splitting, as the dataset already specifies training and testing sets for Peds1 and Peds2.
+2. Model Selection and Training
+Model Choices:
+
+Convolutional Autoencoder: This model learns the normal pattern of pedestrian movement. By training it only on normal frames, it can detect anomalies when reconstruction errors are high.
+3D CNN: This model processes temporal information by treating multiple frames as a single input, ideal for video sequences.
+LSTM (Long Short-Term Memory): A sequential model that works well with time-series data, like frames in a video.
+GAN (Generative Adversarial Network): Can be used to generate normal frames and detect anomalies by comparing them with actual frames.
+Implementation Steps:
+
+Define the architecture: For each model, set up layers as required (e.g., convolutional layers for autoencoders and 3D CNNs, LSTM layers for sequence models).
+Compile the models: Use an appropriate loss function (e.g., mean squared error for autoencoders) and an optimizer like Adam.
+Train on Normal Frames: Train each model only on normal frames to capture typical behavior and save the trained models.
+3. Anomaly Detection
+Testing Phase: Pass the test video clips through each model to predict anomalies.
+Autoencoders: Calculate reconstruction error for each frame. High reconstruction errors can signal anomalies.
+3D CNN and LSTM: Detect frames where the model’s prediction error deviates from the norm.
+Evaluation Metrics: Use metrics like mean absolute error (MAE), mean squared error (MSE), or custom thresholds to classify frames as anomalous or normal.
+Anomaly Localization (Optional): For clips with pixel-level masks, assess which areas within a frame have abnormal values. This can be done by overlaying the model’s predictions on the ground-truth mask and calculating localization metrics like IoU (Intersection over Union).
+4. Enhancing Performance
+Incorporate Additional Data: Look for other pedestrian anomaly datasets to expand training data, if applicable. Make sure to document and justify additional datasets used.
+Hyperparameter Tuning: Experiment with different batch sizes, learning rates, and layer configurations to optimize each model’s performance.
+Data Augmentation: Apply augmentation techniques (like flipping, rotation, or brightness adjustment) to improve model robustness.
+5. Reporting
+Document Approach: Include each step, from data preprocessing to model evaluation, in the report. Explain why certain models or parameters were chosen.
+Visualizations:
+Show example frames of detected anomalies.
+Plot performance metrics such as reconstruction error over time, confusion matrices, or ROC curves for classification.
+Evaluation Results: Summarize the performance of each model, comparing them on metrics like precision, recall, F1-score, and accuracy.
+Deliverables
+Report: Comprehensive documentation covering all project tasks, methods, and findings.
+Trained Models and Code: Submit the final versions of the models and well-documented code used to train and test them.
+Visualizations: Provide images and plots showing the model’s performance and detected anomalies.
+Tools and Libraries
+Python: Main language for the project.
+Deep Learning Frameworks: Use PyTorch or TensorFlow/Keras for model implementation.
+OpenCV: For video processing, loading, and converting videos to frames.
+Additional Libraries:
+Scikit-learn for evaluation metrics.
+Matplotlib/Seaborn for visualizations.
